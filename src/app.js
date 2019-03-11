@@ -16,15 +16,14 @@ var OIDCStrategy = require('passport-azure-ad').OIDCStrategy;
 // this in a reliable storage
 var users = {};
 
-// Passport calls serializeUser and deserializeUser to
-// manage users
-passport.serializeUser(function(user, done) {
+// Passport calls serializeUser and deserializeUser to manage users
+passport.serializeUser(function (user, done) {
   // Use the OID property of the user as a key
   users[user.profile.oid] = user;
-  done (null, user.profile.oid);
+  done(null, user.profile.oid);
 });
 
-passport.deserializeUser(function(id, done) {
+passport.deserializeUser(function (id, done) {
   done(null, users[id]);
 });
 
@@ -48,7 +47,7 @@ async function signInComplete(iss, sub, profile, accessToken, refreshToken, para
     return done(new Error("No OID found in user profile."), null);
   }
 
-  try{
+  try {
     const user = await graph.getUserDetails(accessToken);
 
     if (user) {
@@ -109,7 +108,7 @@ app.use(session({
 app.use(flash());
 
 // Set up local vars for template layout
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   // Read any flashed errors and save
   // in the response locals
   res.locals.error = req.flash('error_msg');
@@ -117,10 +116,9 @@ app.use(function(req, res, next) {
   // Check for simple error string and
   // convert to layout's expected format
   var errs = req.flash('error');
-  for (var i in errs){
-    res.locals.error.push({message: 'An error occurred', debug: errs[i]});
+  for (var i in errs) {
+    res.locals.error.push({ message: 'An error occurred', debug: errs[i] });
   }
-
   next();
 });
 
@@ -131,7 +129,7 @@ app.set('view engine', 'hbs');
 var hbs = require('hbs');
 var moment = require('moment');
 // Helper to format date/time sent by Graph
-hbs.registerHelper('eventDateTime', function(dateTime){
+hbs.registerHelper('eventDateTime', function (dateTime) {
   return moment(dateTime).format('M/D/YY h:mm A');
 });
 
@@ -145,7 +143,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   // Set the authenticated user in the
   // template locals
   if (req.user) {
@@ -160,12 +158,12 @@ app.use('/users', usersRouter);
 app.use('/calendar', calendarRouter);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
