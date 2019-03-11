@@ -5,15 +5,13 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
-var logger = require('morgan');
 
 var app = express();
 
 // Configure passport
 const passport = require('./passport.js');
 
-// Session middleware
-// NOTE: Uses default in-memory session store, which is not suitable for production
+// Session middleware NOTE: Uses default in-memory session store, which is not suitable for production
 var session = require('express-session');
 app.use(session({
   secret: 'your_secret_value_here',
@@ -28,8 +26,7 @@ app.use(flash());
 
 // Set up local vars for template layout
 app.use(function (req, res, next) {
-  // Read any flashed errors and save
-  // in the response locals
+  // Read any flashed errors and save in the response locals
   res.locals.error = req.flash('error_msg');
 
   // Check for simple error string and
@@ -52,7 +49,6 @@ hbs.registerHelper('eventDateTime', function (dateTime) {
   return moment(dateTime).format('M/D/YY h:mm A');
 });
 
-app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
