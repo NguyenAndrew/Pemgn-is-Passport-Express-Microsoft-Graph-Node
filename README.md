@@ -1,6 +1,8 @@
 # Pemgn is Passport Express Microsoft Graph Node
 
-WIP - Work in Progress. It works, but still need further clean up for readability and reusability.
+This project shows how to use Microsoft Graph API with Node (Express + Passport.js)
+
+WIP - Work in Progress. It works, but still need further clean up for readability and reusability. I recommend going through the entire tutorial in the attribution link below.
 
 ## Instructions
 
