@@ -1,13 +1,12 @@
 var graph = require('@microsoft/microsoft-graph-client');
 
+// Use the provided access token to authenticate requests
 function getAuthenticatedClient(accessToken) {
-  const client = graph.Client.init({
-    // Use the provided access token to authenticate requests
+  return graph.Client.init({
     authProvider: (done) => {
       done(null, accessToken);
     }
   });
-  return client;
 }
 
 module.exports = {
@@ -16,7 +15,7 @@ module.exports = {
     const user = await client.api('/me').get();
     return user;
   },
-  
+
   getEvents: async function (accessToken) {
     const client = getAuthenticatedClient(accessToken);
     const events = await client
