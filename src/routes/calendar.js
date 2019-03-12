@@ -15,10 +15,8 @@ router.get('/',
     try {
       accessToken = await tokens.getAccessToken(req);
     } catch (err) {
-      req.flash('error_msg', {
-        message: 'Could not get access token. Try signing out and signing in again.',
-        debug: JSON.stringify(err)
-      });
+      console.log('Could not get access token. Try signing out and signing in again.');
+      console.log(err);
     }
 
     // Used to store Calendar Events
@@ -29,14 +27,11 @@ router.get('/',
     // If there is an access token
     if (accessToken && accessToken.length > 0) {
       try {
-        // Get the events
         const events = await graph.getEvents(accessToken);
         params.events = events.value;
       } catch (err) {
-        req.flash('error_msg', {
-          message: 'Could not fetch events',
-          debug: JSON.stringify(err)
-        });
+        console.log('Could not fetch events');
+        console.log(err);
       }
     }
 

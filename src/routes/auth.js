@@ -10,7 +10,6 @@ router.get('/signin',
         response: res,
         prompt: 'login',
         failureRedirect: '/',
-        failureFlash: true
       }
     )(req,res,next);
   },
@@ -25,7 +24,6 @@ router.post('/callback',
       {
         response: res,
         failureRedirect: '/',
-        failureFlash: true
       }
     )(req,res,next);
   },
