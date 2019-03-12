@@ -3,7 +3,6 @@ require('dotenv').config();
 
 var express = require('express');
 var path = require('path');
-var cookieParser = require('cookie-parser');
 
 var app = express();
 
@@ -36,7 +35,10 @@ hbs.registerHelper('eventDateTime', function (dateTime) {
   return moment(dateTime).format('M/D/YY h:mm A');
 });
 
+// Parse authorization code cookie sent from Microsoft redirect
+const cookieParser = require('cookie-parser');
 app.use(cookieParser());
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Put authenticated user profile in the template locals
