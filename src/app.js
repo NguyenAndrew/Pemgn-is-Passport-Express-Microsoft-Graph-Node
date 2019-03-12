@@ -7,8 +7,9 @@ var cookieParser = require('cookie-parser');
 
 var app = express();
 
-// Configure passport
-const passport = require('./passport.js');
+// Allow express to parse body 
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 // Session middleware NOTE: Uses default in-memory session store, which is not suitable for production
 var session = require('express-session');
@@ -18,6 +19,11 @@ app.use(session({
   saveUninitialized: false,
   unset: 'destroy'
 }));
+
+// Configure passport, must be after session middleware
+const passport = require('./passport.js');
+app.use(passport.initialize());
+app.use(passport.session());
 
 // View engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -30,16 +36,10 @@ hbs.registerHelper('eventDateTime', function (dateTime) {
   return moment(dateTime).format('M/D/YY h:mm A');
 });
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Initialize passport
-app.use(passport.initialize());
-app.use(passport.session());
-
-// Set the authenticated user in the template locals
+// Put authenticated user profile in the template locals
 app.use(function (req, res, next) {
   if (req.user) {
     res.locals.user = req.user.profile;
