@@ -49,11 +49,9 @@ app.use(function (req, res, next) {
 
 // Configure Routes
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
 var calendarRouter = require('./routes/calendar');
 var authRouter = require('./routes/auth');
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
 app.use('/calendar', calendarRouter);
 app.use('/auth', authRouter);
 
