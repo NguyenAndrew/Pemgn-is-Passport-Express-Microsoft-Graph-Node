@@ -14,7 +14,7 @@
     "express": "~4.16.0",
     "express-session": "^1.15.6",
     "hbs": "~4.0.4",
-    "moment": "^2.22.2",
+    "moment": "^2.29.2",
     "morgan": "~1.9.0",
     "passport-azure-ad": "^4.0.0",
     "simple-oauth2": "^2.2.1"
